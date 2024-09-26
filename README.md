@@ -49,7 +49,7 @@ To fetch all the availability
 curl http://localhost:9090/
 ```
 
-Timer for periodic execution can be sent via curl or browser's front end
+Timer for periodic execution can be sent via curl or the browser
 ```shell
 curl --request POST \
   --url 'http://localhost:9090/start?duration=2' \
