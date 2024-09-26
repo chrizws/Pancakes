@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/style.css">
+        <title>Pancakes</title>
+
+    </head>
+<body>
+
+<form id="refresh-form" action="/all" method="GET">
+
+    Refresh in minutes: <input type="number" id="duration" name="duration">
+    <button type="submit">Submit</button>
+</form>
+<br>
+
+Last fetch: <span th:text="${lastFetch}"></span>
+
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Vendor</th>
+        <th>Type</th>
+        <th>Created</th>
+        <th>Published</th>
+        <th>Available</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:class="row" th:each="p : ${product}" th:classappend="${p.available} ?
+'available' : 'unavailable'">
+        <td th:text="${p.title}">Title</td>
+        <td th:text="${p.vendor}">vendor</td>
+        <td th:text="${p.type}">type</td>
+        <td th:text="${p.published_at}">published</td>
+        <td th:text="${p.created_at}">created</td>
+        <td th:text="${p.available}">Available</td>
+    </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Option1</th>
+        <th>Option2</th>
+        <th>Price</th>
+        <th>Available</th>
+        <th>Updated</th>
+
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="var : ${variants}" th:classappend="${var.available} ?
+            'available' : 'unavailable'">
+            <td th:text="${var.name}"></td>
+            <td th:text="${var.option1}"></td>
+            <td th:text="${var.option2}"></td>
+            <td th:text="${var.price}"></td>
+            <td th:text="${var.available}"></td>
+            <td th:text="${var.last_updated}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    function startSSE() {
+        const duration = document.getElementById("duration").value;
+        const eventSource = new EventSource('/all?duration=${duration}');
+
+        eventSource.onmessage = function(event) {
+            const products = JSON.parse(event.data);
+            updateView(products);
+        };
+
+        eventSource.onerror = function(error) {
+            console.error("SSE error: ", error);
+        };
+    }
+
+    function updateView(products) {
+        const productList = document.getElementById('product-list');
+        productList.innerHTML = '';
+
+        p
+    }
+</script>
+
+</body>
+</html>

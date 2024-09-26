@@ -1,0 +1,24 @@
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 75%;
+    border-spacing: 2px;
+}
+
+td, th {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 10px;
+}
+
+tr:hover, .available:hover, .unavailable:hover {
+    background-color: #777774;
+}
+.available {
+    background-color: #fcfc03;
+}
+
+.unavailable {
+    background-color: #ffffff;
+}
