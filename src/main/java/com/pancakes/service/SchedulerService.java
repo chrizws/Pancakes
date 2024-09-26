@@ -1,5 +1,6 @@
 package com.pancakes.service;
 
+import com.pancakes.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -11,15 +12,15 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ScheduledFuture;
 
 @Service
-public class SchedulerService {
+public class SchedulerService<T extends Product> {
 
     private final TaskScheduler taskScheduler;
-    private final ProductService productService;
+    private final ProductService<T> productService;
     private ScheduledFuture<?> scheduledFuture;
     private int interval;
 
     @Autowired
-    public SchedulerService(ProductService productService) {
+    public SchedulerService(ProductService<T> productService) {
         this.productService = productService;
         this.taskScheduler = new ThreadPoolTaskScheduler();
         ((ThreadPoolTaskScheduler)this.taskScheduler).initialize();

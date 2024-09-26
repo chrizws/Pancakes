@@ -1,5 +1,6 @@
 package com.pancakes.controller;
 
+import com.pancakes.model.Product;
 import com.pancakes.service.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainRestController {
 
-    private SchedulerService schedulerService;
+    private SchedulerService<Product> schedulerService;
 
     @Autowired
-    public MainRestController(SchedulerService schedulerService) {
+    public MainRestController(SchedulerService<Product> schedulerService) {
         this.schedulerService = schedulerService;
     }
 

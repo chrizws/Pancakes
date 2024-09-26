@@ -14,10 +14,10 @@ import java.util.*;
 @Controller
 public class MainController {
 
-    private ProductService productService;
+    private final ProductService<Product> productService;
 
     @Autowired
-    public MainController(ProductService productService) {
+    public MainController(ProductService<Product> productService) {
         this.productService = productService;
     }
 

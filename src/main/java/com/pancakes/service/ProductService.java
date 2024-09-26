@@ -17,21 +17,21 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ProductService {
+public class ProductService<T extends Product> {
 
     private PancakeProxy pancakeProxy;
-    private ProductRepository repository;
-    private Product products;
+    private ProductRepository<T> repository;
+    private T products;
 
     @Autowired
-    public ProductService(PancakeProxy pancakeProxy, ProductRepository repository) {
+    public ProductService(PancakeProxy pancakeProxy, ProductRepository<T> repository) {
         this.pancakeProxy = pancakeProxy;
         this.repository = repository;
     }
 
-    public List<Product> getProducts() {
+    public List<T> getProducts() {
 
-        products = pancakeProxy.getProducts();
+        products = (T)pancakeProxy.getProducts();
 
         if (isAvailable(products)) {
             List<Variants> var = getAvailableVariants(products);
@@ -48,12 +48,12 @@ public class ProductService {
         return List.of(products);
     }
 
-    private void saveProducts(Product p) {
+    private void saveProducts(T p) {
 
         repository.save(p);
     }
 
-    public List<Product> getProductList() {
+    public List<T> getProductList() {
         return List.of(products);
     }
 
@@ -65,7 +65,7 @@ public class ProductService {
         return variants;
     }
 
-    private boolean isAvailable(Product p) {
+    private boolean isAvailable(T p) {
 
         AtomicInteger count = new AtomicInteger();
 
