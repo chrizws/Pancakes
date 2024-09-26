@@ -8,10 +8,14 @@
     </head>
 <body>
 
-<form id="refresh-form" action="/all" method="GET">
+<form id="refresh-form" action="/start" method="POST">
 
     Refresh in minutes: <input type="number" id="duration" name="duration">
-    <button type="submit">Submit</button>
+    <button type="submit">Start</button>
+</form>
+
+<form id="stop-form" action="/stop" method="POST">
+    <button type="submit">Stop</button>
 </form>
 <br>
 
