@@ -11,6 +11,7 @@ Backend
 - Spring MVC
 - Spring Data JPA
 - Spring Cloud OpenFeign
+- Angus Mail
 
 Database
 - MySQL

@@ -70,28 +70,5 @@ Last fetch: <span th:text="${lastFetch}"></span>
     </tbody>
 </table>
 
-<script>
-    function startSSE() {
-        const duration = document.getElementById("duration").value;
-        const eventSource = new EventSource('/all?duration=${duration}');
-
-        eventSource.onmessage = function(event) {
-            const products = JSON.parse(event.data);
-            updateView(products);
-        };
-
-        eventSource.onerror = function(error) {
-            console.error("SSE error: ", error);
-        };
-    }
-
-    function updateView(products) {
-        const productList = document.getElementById('product-list');
-        productList.innerHTML = '';
-
-        p
-    }
-</script>
-
 </body>
 </html>
