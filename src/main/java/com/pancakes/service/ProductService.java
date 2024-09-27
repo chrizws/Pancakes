@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -22,6 +25,8 @@ public class ProductService<T extends Product> {
     private PancakeProxy pancakeProxy;
     private ProductRepository<T> repository;
     private T products;
+    private StringBuilder sb;
+    private LocalTime time = LocalTime.now();
 
     @Autowired
     public ProductService(PancakeProxy pancakeProxy, ProductRepository<T> repository) {
@@ -32,20 +37,37 @@ public class ProductService<T extends Product> {
     public List<T> getProducts() {
 
         products = (T)pancakeProxy.getProducts();
+        sb = new StringBuilder();
 
         if (isAvailable(products)) {
             List<Variants> var = getAvailableVariants(products);
-            StringBuilder sb = new StringBuilder();
+
             var.stream().forEach(e -> sb.append(e.getName())
                     .append("\t\t").append(e.getOption1()).append(" / ").append(e.getOption2()).append("\n"));
 
-            System.out.println(sb);
-            NotificationProxy email = new Email();
-            email.send(sb);
+            sendEmail();
         }
+
         saveProducts(products);
 
         return List.of(products);
+    }
+
+    private void sendEmail() {
+
+        LocalTime now = LocalTime.now();
+
+        if (time.until(now, ChronoUnit.MINUTES) > 10) {
+            System.out.println(sb);
+
+            NotificationProxy email = new Email();
+            email.send(sb);
+            time = now;
+        }
+    }
+
+    public String getAvailableProductsAsString() {
+        return sb.toString();
     }
 
     private void saveProducts(T p) {

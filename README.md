@@ -2,7 +2,7 @@
 
 A simple Spring Boot project that fetches for the Pancake Sweats availability via REST API periodically.
 
-Response is generated to the front end in table format and sent via email
+Response is generated to the front end in table format and sent via email if availability pops upp
 
 Front end
 - Thymeleaf
